@@ -28,49 +28,51 @@ const swiper = new Swiper('.swiper', {
 
 const form = document.getElementById('checkEyes');
 const subscribe = document.getElementById('subs');
+const STORAGE_NAME = 'formData';
 const modalForm = new bootstrap.Modal(document.getElementById('formModal'));
 const modalImg = new bootstrap.Modal(document.getElementById('imageModal'));
+const storage = localStorage.getItem(STORAGE_NAME);
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const modalImageTrigger = document.querySelectorAll('[data-modal-img]');
     const modalFormTrigger = document.querySelectorAll('button[data-modal-form]');
     const modalContent = document.querySelector('.image-modal__body');
 
-    modalImageTrigger.forEach(function (triggerElement) {
-        triggerElement.addEventListener('click', function () {
-            if (this.tagName.toLowerCase() === 'img') {
-                modalContent.innerHTML = `<img src='${this.src}' class='img-fluid' alt='Modal Image'>`;
+    modalImageTrigger.forEach((triggerElement) => {
+        triggerElement.addEventListener('click', () => {
+            if (triggerElement.tagName.toLowerCase() === 'img') {
+                modalContent.innerHTML = `<img src='${triggerElement.src}' class='img-fluid' alt='Modal Image'>`;
                 modalImg.show();
             }
         });
     });
 
-    modalFormTrigger.forEach(function (triggerElement) {
-        triggerElement.addEventListener('click', function () {
+    modalFormTrigger.forEach((triggerElement) => {
+        triggerElement.addEventListener('click', () => {
             modalForm.show();
         });
     });
 
-    modalImg._element.addEventListener('hidden.bs.modal', function () {
+    modalImg._element.addEventListener('hidden.bs.modal', () => {
         modalContent.innerHTML = '';
     });
 });
 
 const submitForm = (e) => {
-    let storage = localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')) : [];
-    let email = document.getElementById('email');
-    let tel = document.getElementById('tel');
-    let check = document.getElementById('subscribe');
+    const store = storage ? JSON.parse(storage) : [];
+    const email = document.getElementById('email');
+    const tel = document.getElementById('tel');
+    const check = document.getElementById('subscribe');
 
-    const form = {
+    const item = {
         email: email.value,
         tel: tel.value,
         check: check.value,
-    }
+    };
 
-    localStorage.setItem('formData', JSON.stringify([form, ...storage]));
+    localStorage.setItem(STORAGE_NAME, JSON.stringify([item, ...store]));
 
-    modalForm._element.addEventListener('hidden.bs.modal', function () {
+    modalForm._element.addEventListener('hidden.bs.modal', () => {
         email.value = '';
         tel.value = '';
         check.value = 'on';
@@ -79,11 +81,9 @@ const submitForm = (e) => {
     modalForm.hide();
 
     e.preventDefault();
-}
+};
 
-form.addEventListener('submit', submitForm);
-
-subscribe.addEventListener('submit', (e) => {
+const subscribeForm = (e) => {
     const email = document.getElementById('emailSubs');
     const button = document.getElementById('btnSubs');
 
@@ -109,4 +109,7 @@ subscribe.addEventListener('submit', (e) => {
     }
 
     e.preventDefault();
-});
+};
+
+form.addEventListener('submit', submitForm);
+subscribe.addEventListener('submit', subscribeForm);
