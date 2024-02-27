@@ -110,4 +110,3 @@ subscribe.addEventListener('submit', (e) => {
 
     e.preventDefault();
 });
-
