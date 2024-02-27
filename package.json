@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "eslint": "8.22.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "node-sass": "^9.0.0",
+    "prettier": "3.2.5"
+  },
+  "scripts": {
+    "compile:sass": "node-sass index.scss index.css"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "swiper": "^11.0.6"
+  }
+}
